@@ -1,4 +1,5 @@
 import json
+import logging
 
 from dockerup.client import DockerClient
 from docker.client import Client
@@ -8,6 +9,8 @@ class DockerPyClient(DockerClient):
     def __init__(self, remote, username=None, password=None, email=None):
         super(DockerPyClient,self).__init__()
         self.client = Client(base_url=remote, version='1.15')
+        self.log = logging.getLogger(__name__)
+        self.log.debug('password %s, remote = %s, username=%s', password, remote, username)
         if username:
             self.client.login(username=username, password=password, email=email)
 
@@ -39,6 +42,7 @@ class DockerPyClient(DockerClient):
 
         for line in self.client.pull(repository=repository, stream=True, insecure_registry=True):
             parsed = json.loads(line)
+            self.log.debug('parsed %s' % parsed)
             if 'error' in parsed:
                 raise Exception(parsed['error'])
 

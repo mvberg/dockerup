@@ -152,6 +152,8 @@ class DockerUp(object):
 
             status = self.status(entry)
 
+            self.log.info('current status %s' % status)
+
             if status['Image']:
                 try:
                     # Stop all dependencies, they will get updated/restarted
@@ -165,7 +167,7 @@ class DockerUp(object):
                 except Exception as e:
                     self.log.error('Could not run container: %s' % e)
             else:
-                self.log.error('Image not found: %s' % entry['image'])
+                self.log.error('!!!!!!!!!!!!!!!!Image not found: %s' % entry['image'])
 
             if callback:
                 callback(entry)

@@ -16,6 +16,8 @@ def settings(args):
         'email': None
     }
 
+
+
     if os.path.exists(args.config):
         settings.update(properties(args.config))
 
@@ -30,6 +32,8 @@ def settings(args):
 
     if args.server is not None:
         settings['server'] = args.server
+
+    logging.debug(settings)
 
     return settings
 
